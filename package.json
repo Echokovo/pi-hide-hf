@@ -1,0 +1,27 @@
+{
+  "name": "@winterchenhuan/pi-hide-hf",
+  "version": "1.0.0",
+  "description": "Hide HuggingFace models extension for Pi. Filter HF models from the model selector when HF_TOKEN is present.",
+  "keywords": [
+    "pi-package"
+  ],
+  "author": "Winter Huan",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/winterhuan/pi-hide-hf.git"
+  },
+  "bugs": {
+    "url": "https://github.com/winterhuan/pi-hide-hf/issues"
+  },
+  "homepage": "https://github.com/winterhuan/pi-hide-hf#readme",
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "files": [
+    "index.ts",
+    "README.md"
+  ]
+}
