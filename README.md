@@ -29,7 +29,7 @@ pi install git:github.com/winterhuan/pi-hide-hf
 
 > ⚠️ 安装后需要**新启动** pi 或在已有会话中输入 **`/reload`** 才能加载新扩展。
 
-启动后 `[hide-hf] Patched getAvailable() to hide HF models` 即生效。
+重启后扩展自动生效：HF 模型不会出现在 `/model` 与模型选择器中，且 pi 不再把 huggingface 模型目录拉取/写入 `models-store.json`。
 
 ```bash
 # 默认行为：HF_TOKEN 存在时自动隐藏所有 HF 模型
