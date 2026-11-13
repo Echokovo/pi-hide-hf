@@ -13,15 +13,11 @@ pi 的模型可见性是 **provider 粒度**（有 token = 该 provider 所有�
 
 ## 使用方法
 
-**通过 npm 安装：**
 ```bash
-pi install npm:@winterchenhuan/pi-hide-hf
+pi install git:github.com/Echokovo/pi-hide-hf
 ```
 
-**通过 git 安装：**
-```bash
-pi install git:github.com/winterhuan/pi-hide-hf
-```
+> npm 上的 `@winterchenhuan/pi-hide-hf` 停留在 `1.0.0`，只 patch 了 `ModelRegistry` 门面，在现行 pi 上不生效；本修复只在上面的 git 源发布。
 
 > ⚠️ 安装后需要**新启动** pi 或在已有会话中输入 **`/reload`** 才能加载新扩展。
 
