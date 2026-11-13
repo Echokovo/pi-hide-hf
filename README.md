@@ -37,9 +37,17 @@ HF_HIDE_MODELS=0 pi
 # 只保留指定模型
 HF_ALLOWED_MODELS="moonshotai/Kimi-K2.6,zai-org/GLM-5" pi
 
-# 连 pi --list-models 也不显示 HF 模型
-# （副作用：pi 内部拿不到 HF_TOKEN，huggingface-cli 之类会失效）
+# 从 pi 进程环境中移除 HF_TOKEN（子进程、huggingface-cli 之类也拿不到）
 HF_UNSET_TOKEN=1 pi
+```
+
+## 已知限制
+
+`pi --list-models` 走的是启动前的目录列表路径，不经过扩展的 patch，仍会列出 HF 模型。
+需要它也不显示时，在进程启动前就去掉 token：
+
+```bash
+env -u HF_TOKEN pi --list-models   # 或 HF_TOKEN= pi --list-models
 ```
 
 ## 配置项
@@ -48,4 +56,4 @@ HF_UNSET_TOKEN=1 pi
 |---|---|---|
 | `HF_HIDE_MODELS` | HF_TOKEN 存在时为 `1` | 是否隐藏 HF 模型 |
 | `HF_ALLOWED_MODELS` | *(空)* | 逗号分隔的模型 ID 白名单 |
-| `HF_UNSET_TOKEN` | `0` | 设为 `1` 时同时从进程环境中移除 HF_TOKEN，`pi --list-models` 也不再显示 HF 模型 |
+| `HF_UNSET_TOKEN` | `0` | 设为 `1` 时同时从进程环境中移除 HF_TOKEN（不影响 `pi --list-models`，见上） |
