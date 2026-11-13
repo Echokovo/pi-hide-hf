@@ -9,13 +9,9 @@ pi 的模型可见性是 **provider 粒度**（有 token = 该 provider 所有�
 
 ## 解决方案
 
-两层策略：
-1. **扩展插件** — 在 `session_start` 时 patch `getAvailable()`，过滤掉 HF 模型
-2. **Shell 包装脚本** — `pi-nohf` 启动前去掉 `HF_TOKEN`（`--list-models` 也能生效）
+扩展插件在 `session_start` 时 patch 模型可用性接口，把 HF 模型从可用列表里过滤掉。
 
 ## 使用方法
-
-### 方案 A：扩展插件（推荐）
 
 **通过 npm 安装：**
 ```bash
@@ -40,17 +36,11 @@ HF_HIDE_MODELS=0 pi
 
 # 只保留指定模型
 HF_ALLOWED_MODELS="moonshotai/Kimi-K2.6,zai-org/GLM-5" pi
+
+# 连 pi --list-models 也不显示 HF 模型
+# （副作用：pi 内部拿不到 HF_TOKEN，huggingface-cli 之类会失效）
+HF_UNSET_TOKEN=1 pi
 ```
-
-### 方案 B：Shell 包装脚本
-
-```bash
-~/.local/bin/pi-nohf          # 启动 pi，不带 HF_TOKEN
-~/.local/bin/pi-nohf -p "hi"  # 同上，-p 模式
-```
-
-优点：`pi --list-models` 也不会显示 HF 模型。
-缺点：HF_TOKEN 在 pi 内部完全不可用（如 huggingface-cli）。
 
 ## 配置项
 
@@ -58,4 +48,4 @@ HF_ALLOWED_MODELS="moonshotai/Kimi-K2.6,zai-org/GLM-5" pi
 |---|---|---|
 | `HF_HIDE_MODELS` | HF_TOKEN 存在时为 `1` | 是否隐藏 HF 模型 |
 | `HF_ALLOWED_MODELS` | *(空)* | 逗号分隔的模型 ID 白名单 |
-| `HF_UNSET_TOKEN` | `0` | 如果设为 `1`，同时从进程环境中移除 HF_TOKEN |
+| `HF_UNSET_TOKEN` | `0` | 设为 `1` 时同时从进程环境中移除 HF_TOKEN，`pi --list-models` 也不再显示 HF 模型 |
